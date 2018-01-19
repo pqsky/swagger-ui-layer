@@ -23,6 +23,15 @@
 				        <span>{{:info.title}}<small class="version">{{:info.version}}</small></span>
 				</div>
 			</div>
+
+            <div  style="position:absolute;top: 25px;right:0px;height:20px;width:200px">
+                <select style="width:180px">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="opel">Opel</option>
+                    <option value="audi">Audi</option>
+                </select>
+            </div>
 		</div>
 		<div class="layui-side layui-bg-black" id="admin-side">
 			<div class="layui-side-scroll" id="admin-navbar-side"
@@ -157,6 +166,7 @@
                     </select>
                 </div>
                 <textarea class="parameter-text hide" rows="10" id="text_tp_{{:operationId}}"></textarea>
+                <form id="layui-form">
                 <table class="layui-table"  id="table_tp_{{:operationId}}">
                   <colgroup>
                     <col width="150">
@@ -199,6 +209,7 @@
                     {{/for}}
                   </tbody>
                 </table>
+                </form>
                 <div>
                     <button class="layui-btn" name="btn_submit" onclick="getData('{{:operationId}}')"> Submit </button>
                 </div>

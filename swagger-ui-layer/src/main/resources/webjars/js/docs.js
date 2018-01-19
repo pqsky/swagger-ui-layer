@@ -74,6 +74,8 @@ function getResponseModelName(val){
 
 //测试按钮，获取数据
 function getData(operationId){
+	
+   var validate = true;
    var path = contextPath + $("[m_operationId='"+operationId+"']").attr("path");
    //path 参数
    $("[p_operationId='"+operationId+"'][in='path']").each(function(index, domEle){
@@ -92,7 +94,15 @@ function getData(operationId){
    if("form" == parameterType){
        $("[p_operationId='"+operationId+"'][in='query']").each(function(index, domEle){
            var k = $(domEle).attr("name");
+           var required = $(domEle).attr("required");
            var v = $(domEle).val();
+           if(""==v && required=="required"){
+        	   $(domEle).attr("style","border:1px solid red;");
+        	   validate = false;
+        	   return;
+           }else{
+        	   $(domEle).attr("style","border:1px solid #e6e6e6;");
+           }
            if(v){
                parameterJson[k] = v;
            }
@@ -107,18 +117,28 @@ function getData(operationId){
        }
    }
    
+   if(!validate){
+	   return
+   }
+   
    //发送请求
    $.ajax({
 	   type: $("[m_operationId='"+operationId+"']").attr("method"),
 	   url: path,
 	   data: parameterJson,
-	   dataType: 'json',
+//	   dataType: 'json',
 	   contentType: contentType,
 	   success: function(data){
 	     var options = {
           withQuotes: true
          };
 	     $("#json-response").jsonViewer(data, options);
+	   },
+	   error:function(data){
+		   var options = {
+	          withQuotes: true
+	         };
+		   $("#json-response").jsonViewer(data, options);
 	   }
    });
 }
